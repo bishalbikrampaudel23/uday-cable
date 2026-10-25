@@ -18,3 +18,4 @@ A production-ready secure web application scaffold for an ISP operating in Syang
 - Parameterized PostgreSQL queries
 - Sanitized lead and ticket input
 - HttpOnly, SameSite=Strict cookie ready backend design
+- Production PostgreSQL TLS verifies server certificates; set `PG_SSL_CA` when using a private CA.

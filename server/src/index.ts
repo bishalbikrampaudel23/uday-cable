@@ -6,11 +6,12 @@ import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import { z } from 'zod';
 import sanitizeHtml from 'sanitize-html';
+import { pathToFileURL } from 'node:url';
 import { query } from './db.js';
 
 dotenv.config();
 
-const app = express();
+export const app = express();
 const port = Number(process.env.PORT ?? 5000);
 
 app.use(helmet());
@@ -153,6 +154,8 @@ app.post('/api/tickets', async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
-});
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`);
+  });
+}

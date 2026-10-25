@@ -39,8 +39,8 @@ function App() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-100 text-slate-800">
-      <header className="border-b border-slate-200 bg-white/95 backdrop-blur">
+    <div className="app-shell min-h-screen bg-slate-100 text-slate-800">
+      <header className="site-header border-b border-slate-200 bg-white/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 text-sm text-slate-600 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3">
             <img src={logoImage} alt="Udaya Cable logo" className="h-11 w-11 rounded-full border border-slate-200 object-cover shadow-sm" />
@@ -49,45 +49,61 @@ function App() {
               <div className="text-xs text-slate-500">Official partner for Syangja connectivity</div>
             </div>
           </div>
-          <a href="https://udayacable.com.np" target="_blank" rel="noreferrer" className="rounded-full bg-blue-700 px-4 py-2 font-semibold text-white transition hover:bg-blue-800">Client Portal</a>
+          <a href="https://udayacable.com.np" target="_blank" rel="noreferrer" className="portal-link rounded-full px-4 py-2 font-semibold text-white transition">Client Portal</a>
         </div>
       </header>
 
-      <main className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
-        <section className="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <div className="max-w-2xl">
-              <div className="inline-flex rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-blue-700">Syangja connectivity</div>
-              <h2 className="mt-3 text-3xl font-semibold leading-tight text-slate-900 sm:text-4xl">Simple, compact access to internet, service coverage, and support.</h2>
-              <p className="mt-3 text-sm leading-7 text-slate-600">Choose a section below to explore plans, check availability, or contact the local team.</p>
+      <main className="page-main mx-auto flex max-w-7xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
+        <section className="hero-panel">
+          <div className="hero-layout">
+            <div className="hero-copy">
+              <p className="hero-eyebrow"><span className="hero-status-dot" /> Syangja, Nepal <span className="eyebrow-divider">/</span> Fiber internet</p>
+              <h1>More of what matters, connected.</h1>
+              <p className="hero-description">Fast, dependable internet with a local team ready to help your home or business.</p>
+              <div className="hero-actions">
+                <button type="button" onClick={() => setActiveSection('plans')} className="hero-primary">Explore plans <span aria-hidden="true">→</span></button>
+                <button type="button" onClick={() => setActiveSection('coverage')} className="hero-secondary">Check coverage</button>
+              </div>
             </div>
-            <div className="flex flex-wrap gap-2">
-              {navItems.map((item) => (
-                <button
-                  key={item.key}
-                  type="button"
-                  onClick={() => setActiveSection(item.key)}
-                  className={`rounded-full px-4 py-2 text-sm font-semibold transition ${activeSection === item.key ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}
-                >
-                  {item.label}
-                </button>
-              ))}
+            <div className="network-visual" role="img" aria-label="Fiber connection linking home, television, and work">
+              <span className="network-link network-link-home"><span className="signal-packet" /></span>
+              <span className="network-link network-link-tv"><span className="signal-packet" /></span>
+              <span className="network-link network-link-work"><span className="signal-packet" /></span>
+              <span className="network-hub"><strong>FIBER</strong><span>UDAYA</span></span>
+              <span className="network-endpoint endpoint-home"><strong>H</strong><span>HOME</span></span>
+              <span className="network-endpoint endpoint-tv"><strong>TV</strong><span>STREAM</span></span>
+              <span className="network-endpoint endpoint-work"><strong>W</strong><span>WORK</span></span>
             </div>
           </div>
+          <nav className="section-nav" aria-label="Main sections">
+            {navItems.map((item) => (
+              <button
+                key={item.key}
+                type="button"
+                onClick={() => setActiveSection(item.key)}
+                aria-pressed={activeSection === item.key}
+                className={`section-nav-link ${activeSection === item.key ? 'is-active' : ''}`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
         </section>
 
-        <section className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+        <section className="content-panel rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+          <div key={activeSection} className="content-enter">
           {activeSection === 'overview' && (
             <div className="grid gap-4 md:grid-cols-3">
               {[
-                ['Fast setup', 'Clear installation steps and local guidance for every new connection.'],
-                ['Dependable service', 'Consistent support backed by a team that understands local needs.'],
-                ['Transparent plans', 'Straightforward options for homes, offices, and everyday use.']
-              ].map(([title, text]) => (
-                <div key={title} className="rounded-[20px] border border-slate-200 bg-slate-50 p-4">
-                  <h3 className="font-semibold text-slate-900">{title}</h3>
-                  <p className="mt-2 text-sm leading-7 text-slate-600">{text}</p>
-                </div>
+                ['01', 'A quick, clear start', 'Our local team guides you through installation and gets your connection ready.'],
+                ['02', 'Help from real people', 'Get practical support from a team that knows your area and your needs.'],
+                ['03', 'Plans without surprises', 'Compare straightforward options for home, work, and entertainment.']
+              ].map(([number, title, text], index) => (
+                <article key={title} className="feature-item" style={{ animationDelay: `${index * 90}ms` }}>
+                  <span className="feature-number">{number}</span>
+                  <h2>{title}</h2>
+                  <p>{text}</p>
+                </article>
               ))}
             </div>
           )}
@@ -119,6 +135,7 @@ function App() {
               <SupportTicketForm />
             </div>
           )}
+          </div>
         </section>
       </main>
 
